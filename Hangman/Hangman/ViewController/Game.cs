@@ -17,6 +17,8 @@ namespace Hangman.ViewController
             int num = Int32.Parse(Console.ReadLine());
             if(num == 0)
             {
+                Parser.RefactoredFileReader refactoredFileReader = new Parser.RefactoredFileReader();
+                refactoredFileReader.ReadData();
                 UI userInterface = new UI();
                 bool finished = false;
                 int trys = 0;

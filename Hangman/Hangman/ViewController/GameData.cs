@@ -78,7 +78,7 @@ namespace Hangman.ViewController
                     possibleLetters.Add(c);
                 }
             }
-
+            //TODO
             //if char exits in every word ->at same position<-
             /*
             HashSet<char> newPossibleLetters = new HashSet<char>();

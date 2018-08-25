@@ -35,12 +35,18 @@ namespace Hangman.ViewController
         public void StartTest()
         {
             int countWord = 0;
-            //Console.WriteLine("Word length: " + wordLengthUsed);
-            for (int x = 0; x < FileReader.GetInstance().lengthWordArray[wordLengthUsed].Count; x++)
+            List<string> lengthWordArray = new List<string>();
+
+            for(int i = 0; i < FileReader.GetInstance().lengthWordArray[wordLengthUsed].Count; i++)
+            {
+                lengthWordArray.Add(FileReader.GetInstance().lengthWordArray[wordLengthUsed][i]);
+            }
+            
+            for (int x = 0; x < lengthWordArray.Count; x++)
             {
                 currentTrys = 0;
                 currentWord = "";
-                fullWord = FileReader.GetInstance().lengthWordArray[wordLengthUsed][x];
+                fullWord = lengthWordArray[x];
                 m_controller.InitGameData(fullWord.Length);
                 //Console.WriteLine(fullWord);
                 for (int j = 0; j < fullWord.Length; j++)
@@ -89,15 +95,6 @@ namespace Hangman.ViewController
                     maxWord = fullWord;
                 }
                 countWord++;
-                /*
-                if (countWord % 1000 == 0)
-                {
-                    Console.WriteLine("number: " + countWord + " finished!");
-                    Console.WriteLine("length: " + wordLengthUsed);
-                    Console.WriteLine("min trys: " + minTrys + "\tword:" + minWord);
-                    Console.WriteLine("max trys: " + maxTrys + "\tword:" + maxWord);
-                }*/
-
             }
             if (countWord != 0)
             {
