@@ -19,7 +19,8 @@ namespace Hangman.ViewController
             m_predictedChars = new HashSet<char>();
             m_wordLength = wordLength;
             m_possibleWords = new List<string>();
-            foreach(string s in FileReader.GetInstance().lengthWordArray[wordLength]){
+            foreach (string s in FileReader.GetInstance().lengthWordArray[wordLength])
+            {
                 m_possibleWords.Add(s);
             }
         }
@@ -39,7 +40,7 @@ namespace Hangman.ViewController
             //if char isnt in new word -> char was wrong -> kick all words with that char
             if (!m_currentWord.Contains(predictedChar))
             {
-                foreach(string word in m_possibleWords)
+                foreach (string word in m_possibleWords)
                 {
                     if (!word.Contains(predictedChar))
                     {
@@ -56,7 +57,7 @@ namespace Hangman.ViewController
                 bool validWord = true;
                 for (int i = 0; i < m_wordLength; i++)
                 {
-                    if ((!m_currentWord[i].Equals('_') && !tmpWord[i].Equals(m_currentWord[i]))||(m_currentWord[i].Equals('_') && tmpWord[i].Equals(predictedChar)))
+                    if ((!m_currentWord[i].Equals('_') && !tmpWord[i].Equals(m_currentWord[i])) || (m_currentWord[i].Equals('_') && tmpWord[i].Equals(predictedChar)))
                     {
                         validWord = false;
                         break;
@@ -69,41 +70,29 @@ namespace Hangman.ViewController
             }
             m_possibleWords = newPossibleWords;
 
-            //add letters to possible
-            HashSet<char> possibleLetters = new HashSet<char>();
-            foreach (string s in m_possibleWords)
+            //if char exits in every word ->at same position<- remove it only if its the only letter not if it is twice in the same word
+            for (int i = 0; i < m_currentWord.Length; i++)
             {
-                foreach (char c in s)
+                if (m_currentWord[i].Equals('_'))
                 {
-                    possibleLetters.Add(c);
-                }
-            }
-            //TODO
-            //if char exits in every word ->at same position<-
-            /*
-            HashSet<char> newPossibleLetters = new HashSet<char>();
-            foreach (char c in possibleLetters)
-            {
-                bool existsAtSamePos = true;
-                foreach (string w in m_possibleWords)
-                {
-                    if (!w.Contains(c))
+                    bool allWordsSameLetterSamePos = true;
+                    char c = m_possibleWords[0][i];
+                    foreach (string posWord in m_possibleWords)
                     {
-                        existsAtSamePos = false;
+                        if (!posWord[i].Equals(c))
+                        {
+                            Console.WriteLine("not same letter: " + posWord[i] + " letter was: " + c);
+                            allWordsSameLetterSamePos = false;
+                            break;
+                        }
+                    }
+                    if (allWordsSameLetterSamePos)
+                    {
+                        Console.WriteLine("same letter: " + c);
+                        m_predictedChars.Add(c);
                     }
                 }
-                
-                if (existsAtSamePos)
-                {
-                    m_predictedChars.Add(c);
-                    newPossibleLetters.Add(c);
-                }
             }
-
-            foreach(char c in newPossibleLetters)
-            {
-                possibleLetters.Remove(c);
-            }*/
         }
     }
 }
