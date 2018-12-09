@@ -1,2 +1,2 @@
 # Hangman
-Small hangman project with different predicition approaches
+Small hangman predictor project
